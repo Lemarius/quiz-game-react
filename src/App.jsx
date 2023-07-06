@@ -1,5 +1,13 @@
+import Quiz from './components/quiz/Quiz';
+import { GlobalStyles } from './styles/globalStyles';
+
 const App = () => {
-	return <h1>Núcleo de la aplicación</h1>;
+	return (
+		<>
+			<GlobalStyles />
+			<Quiz />
+		</>
+	);
 };
 
 export default App;
