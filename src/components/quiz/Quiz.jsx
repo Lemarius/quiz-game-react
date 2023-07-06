@@ -12,15 +12,7 @@ import Answers from '../answers/Answers';
 const Quiz = () => {
 	const [counter, setCounter] = useState(0);
 	const [answers, setAnswers] = useState([]);
-
-	const handleOptionClick = option => {
-		const newAnswers = [...answers, option];
-		setAnswers(newAnswers);
-
-		if (counter < QUESTIONS.length) {
-			setCounter(counter + 1);
-		}
-	};
+	console.log(answers);
 
 	return (
 		<>
@@ -33,12 +25,20 @@ const Quiz = () => {
 					<Answers answers={answers} />
 				) : (
 					<>
-						<StyledQuestion>{QUESTIONS[counter].question}</StyledQuestion>
+						{<StyledQuestion>{QUESTIONS[counter].question}</StyledQuestion>}
 						<StyledOptionCont>
 							{QUESTIONS[counter].options.map((option, index) => (
 								<StyledOption
 									key={index}
-									onClick={() => handleOptionClick(option)}
+									onClick={() =>
+										handleOptionClick(
+											counter,
+											setCounter,
+											answers,
+											setAnswers,
+											option
+										)
+									}
 									initial={{ scale: 0, opacity: 0 }}
 									animate={{ scale: 1, opacity: 1 }}
 									transition={{ duration: 1.5, delay: 0.5 }}
@@ -52,6 +52,20 @@ const Quiz = () => {
 			</StyledContainer>
 		</>
 	);
+};
+
+const handleOptionClick = (
+	counter,
+	setCounter,
+	answers,
+	setAnswers,
+	option
+) => {
+	setAnswers([...answers, option]);
+
+	if (counter < QUESTIONS.length) {
+		setCounter(counter + 1);
+	}
 };
 
 export default Quiz;
