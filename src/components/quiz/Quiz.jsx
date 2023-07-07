@@ -8,6 +8,7 @@ import {
 	StyledQuestion
 } from './styles';
 import Answers from '../answers/Answers';
+import { AnimatePresence } from 'framer-motion';
 
 const Quiz = () => {
 	const [counter, setCounter] = useState(0);
@@ -27,25 +28,27 @@ const Quiz = () => {
 					<>
 						{<StyledQuestion>{QUESTIONS[counter].question}</StyledQuestion>}
 						<StyledOptionCont>
-							{QUESTIONS[counter].options.map((option, index) => (
-								<StyledOption
-									key={index}
-									onClick={() =>
-										handleOptionClick(
-											counter,
-											setCounter,
-											answers,
-											setAnswers,
-											option
-										)
-									}
-									initial={{ scale: 0, opacity: 0 }}
-									animate={{ scale: 1, opacity: 1 }}
-									transition={{ duration: 1.5, delay: 0.5 }}
-								>
-									<StyledAnswer>{option}</StyledAnswer>
-								</StyledOption>
-							))}
+							<AnimatePresence key={counter}>
+								{QUESTIONS[counter].options.map((option, index) => (
+									<StyledOption
+										key={index}
+										onClick={() =>
+											handleOptionClick(
+												counter,
+												setCounter,
+												answers,
+												setAnswers,
+												option
+											)
+										}
+										initial={{ opacity: 0, scale: 0.3 }}
+										animate={{ opacity: 1, scale: 1 }}
+										transition={{ duration: 0.5, delay: index * 0.3 }}
+									>
+										<StyledAnswer>{option}</StyledAnswer>
+									</StyledOption>
+								))}
+							</AnimatePresence>
 						</StyledOptionCont>
 					</>
 				)}
